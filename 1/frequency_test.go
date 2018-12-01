@@ -11,9 +11,14 @@ import (
 // Combined samle
 func TestFrequency(t *testing.T) {
 
-	sample := "-1\n-2\n-3"
+	sample := []string{
+		"-1",
+		"-2",
+		"-3",
+	}
 
-	result := -6
+	var result int64
+	result = -6
 
 	output := Frequency(sample)
 	if output != result {
