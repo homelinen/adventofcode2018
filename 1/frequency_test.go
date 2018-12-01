@@ -25,4 +25,18 @@ func TestFrequency(t *testing.T) {
 		t.Errorf("Parsing of sample is incorrect, got: %d, want: %d.", output, result)
 	}
 
+	// Example 2
+
+	sample = []string{
+		"+1",
+		"+1",
+		"-2",
+	}
+
+	result = 0
+
+	output = Frequency(sample)
+	if output != result {
+		t.Errorf("Parsing of sample is incorrect, got: %d, want: %d.", output, result)
+	}
 }
