@@ -1,7 +1,9 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"os"
 	"strconv"
 )
 
@@ -23,5 +25,19 @@ func Frequency(changes []string) int64 {
 }
 
 func main() {
-	fmt.Println("vim-go")
+	fmt.Println("frequency")
+
+	file := "input.txt"
+
+	f, _ := os.Open(file)
+	reader := bufio.NewReader(f)
+
+	scanner := bufio.NewScanner(reader)
+
+	var changes []string
+	for scanner.Scan() {
+		changes = append(changes, scanner.Text())
+	}
+
+	fmt.Println(Frequency(changes))
 }
