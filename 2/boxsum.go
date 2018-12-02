@@ -12,24 +12,11 @@ type Pair struct {
 
 func (a Pair) Compare(b Pair) bool {
 
-	// These are terrible hashes
-	hash_a := 0
-	for _, l := range a.word_a {
-		hash_a += int(l)
+	if (a.word_a == b.word_a && a.word_b == b.word_b) ||
+		(a.word_b == b.word_a && a.word_a == b.word_b) {
+		return true
 	}
-	for _, l := range a.word_b {
-		hash_a += int(l)
-	}
-
-	hash_b := 0
-	for _, l := range b.word_a {
-		hash_b += int(l)
-	}
-	for _, l := range b.word_b {
-		hash_b += int(l)
-	}
-
-	return hash_a == hash_b
+	return false
 }
 
 func ExactlyTwiceOrThrice(boxid string) (bool, bool) {

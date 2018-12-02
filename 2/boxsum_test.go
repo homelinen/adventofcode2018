@@ -144,6 +144,27 @@ func TestCreatePairs(t *testing.T) {
 				},
 			},
 		},
+		{
+			[]string{
+				"abcde",
+				"fghij",
+				"abced",
+			},
+			[]Pair{
+				Pair{
+					word_a: "abcde",
+					word_b: "fghij",
+				},
+				Pair{
+					word_a: "abcde",
+					word_b: "abced",
+				},
+				Pair{
+					word_a: "fghij",
+					word_b: "abced",
+				},
+			},
+		},
 	}
 
 	for _, testrow := range test_set {
