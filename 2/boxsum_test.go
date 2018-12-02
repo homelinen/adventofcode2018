@@ -33,3 +33,29 @@ func TestExactlyTwiceOrThrice(t *testing.T) {
 		}
 	}
 }
+func TestChecksum(t *testing.T) {
+	test_set := []struct {
+		ids      []string
+		expected int
+	}{
+		{[]string{"bababc"}, 1},
+		{[]string{
+			"bababc",
+			"abbcde",
+		}, 2},
+		{[]string{
+			"bababc",
+			"abbcde",
+			"abbbde",
+		}, 4},
+	}
+
+	for _, testrow := range test_set {
+		result := Checksum(testrow.ids)
+		expected := testrow.expected
+
+		if result != expected {
+			t.Errorf("Parsing of sample is incorrect, got: %v, want: %v.", result, expected)
+		}
+	}
+}

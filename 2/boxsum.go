@@ -1,6 +1,8 @@
 package main
 
+import "bufio"
 import "fmt"
+import "os"
 
 func ExactlyTwiceOrThrice(boxid string) (bool, bool) {
 
@@ -30,6 +32,34 @@ func ExactlyThree(boxid string) bool {
 	return false
 }
 
+func Checksum(lines []string) int {
+
+	c_twice := 0
+	c_thrice := 0
+	for _, item := range lines {
+
+		tw, th := ExactlyTwiceOrThrice(item)
+		if tw {
+			c_twice += 1
+		}
+		if th {
+			c_thrice += 1
+		}
+	}
+	return c_twice * c_thrice
+}
+
 func main() {
-	fmt.Println("vim-go")
+	file := "input.txt"
+
+	f, _ := os.Open(file)
+	reader := bufio.NewReader(f)
+
+	scanner := bufio.NewScanner(reader)
+
+	var changes []string
+	for scanner.Scan() {
+		changes = append(changes, scanner.Text())
+	}
+	fmt.Println("Count: ", Checksum(changes))
 }
