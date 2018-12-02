@@ -59,3 +59,105 @@ func TestChecksum(t *testing.T) {
 		}
 	}
 }
+
+func TestWordDistance(t *testing.T) {
+	test_set := []struct {
+		words    []string
+		expected int
+	}{
+		{[]string{
+			"fghij",
+			"fguij",
+		},
+			1,
+		},
+		{[]string{
+			"abcde",
+			"axcye",
+		},
+			2,
+		},
+	}
+
+	for _, testrow := range test_set {
+		result := WordDistance(testrow.words[0], testrow.words[1])
+		expected := testrow.expected
+
+		if result != expected {
+			t.Errorf("Parsing of sample is incorrect, got: %v, want: %v.", result, expected)
+		}
+	}
+}
+
+func TestWordSimilarities(t *testing.T) {
+	test_set := []struct {
+		words    []string
+		expected string
+	}{
+		{[]string{
+			"fghij",
+			"fguij",
+		},
+			"fgij",
+		},
+		{[]string{
+			"abcde",
+			"axcye",
+		},
+			"ace",
+		},
+	}
+
+	for _, testrow := range test_set {
+		result := WordSimilarities(testrow.words[0], testrow.words[1])
+		expected := testrow.expected
+
+		if result != expected {
+			t.Errorf("Parsing of sample is incorrect, got: %v, want: %v.", result, expected)
+		}
+	}
+}
+
+func TestCreatePairs(t *testing.T) {
+	test_set := []struct {
+		words []string
+		pairs []Pair
+	}{
+		{
+			[]string{
+				"abcde",
+				"fghij",
+				"klmno",
+			},
+			[]Pair{
+				Pair{
+					word_a: "abcde",
+					word_b: "fghij",
+				},
+				Pair{
+					word_a: "abcde",
+					word_b: "klmno",
+				},
+				Pair{
+					word_a: "fghij",
+					word_b: "klmno",
+				},
+			},
+		},
+	}
+
+	for _, testrow := range test_set {
+		result := CreatePairs(testrow.words)
+		expected := testrow.pairs
+
+		if len(result) != len(expected) {
+			t.Errorf("Parsing of sample is incorrect, got: %v, want: %v.", result, expected)
+		}
+
+		for i := range result {
+			if result[i] != expected[i] {
+				t.Errorf("Parsing of sample is incorrect, got: %v, want: %v.", result[i], expected[i])
+			}
+		}
+	}
+}
