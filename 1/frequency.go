@@ -45,36 +45,36 @@ func Any(vs []int64, f func(int64) bool) bool {
 func FrequencyTwice(changes []string) int64 {
 
 	var found_freq []int64
-	var second_pass int64
+	var first_pass int64
 
 	var found bool
-	// FIXME: Deadslow, calculating the pass from scratch each time 2n time
+
 	for _, n := range makeRange(1, len(changes)) {
-		first_pass := Frequency(changes[:n], 0)
-		fmt.Println(first_pass)
+		first_pass = Frequency(changes[:n], 0)
+
 		found_freq = append(found_freq, first_pass)
 	}
+	var start_freq int64 = first_pass
 
-	for _, start_freq := range found_freq {
+	for found == false {
+		// FIXME: Deadslow, calculating the pass from scratch each time 2n time
 		for _, n := range makeRange(1, len(changes)) {
-			second_pass = Frequency(changes[:n], start_freq)
+			first_pass = Frequency(changes[:n], start_freq)
+			//fmt.Println(first_pass)
 
-			fmt.Println(second_pass)
 			if Any(found_freq, func(c int64) bool {
-				return second_pass == c
+				return first_pass == c
 			}) {
-				fmt.Println("Found")
+				//fmt.Println("Found")
 				found = true
 				break
 			}
-		}
 
-		if found {
-			break
 		}
+		start_freq = first_pass
 	}
 
-	return second_pass
+	return first_pass
 }
 
 func main() {
