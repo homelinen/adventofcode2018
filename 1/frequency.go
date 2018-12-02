@@ -33,29 +33,45 @@ func makeRange(min, max int) []int {
 	return a
 }
 
+func Any(vs []int64, f func(int64) bool) bool {
+	for _, v := range vs {
+		if f(v) {
+			return true
+		}
+	}
+	return false
+}
+
 func FrequencyTwice(changes []string) int64 {
 
-	found := false
-
+	var found_freq []int64
 	var second_pass int64
-	num := 1
 
+	var found bool
 	// FIXME: Deadslow, calculating the pass from scratch each time 2n time
-	for found == false {
-		found = false
-		first_pass := Frequency(changes[:num], 0)
+	for _, n := range makeRange(1, len(changes)) {
+		first_pass := Frequency(changes[:n], 0)
+		fmt.Println(first_pass)
+		found_freq = append(found_freq, first_pass)
+	}
 
-		fmt.Println("f: ", first_pass)
+	for _, start_freq := range found_freq {
 		for _, n := range makeRange(1, len(changes)) {
-			second_pass = Frequency(changes[:n], first_pass)
-			fmt.Println("s:", second_pass)
-			if second_pass == first_pass {
+			second_pass = Frequency(changes[:n], start_freq)
+
+			fmt.Println(second_pass)
+			if Any(found_freq, func(c int64) bool {
+				return second_pass == c
+			}) {
 				fmt.Println("Found")
 				found = true
+				break
 			}
 		}
 
-		num += 1
+		if found {
+			break
+		}
 	}
 
 	return second_pass
