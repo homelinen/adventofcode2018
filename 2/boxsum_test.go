@@ -182,3 +182,42 @@ func TestCreatePairs(t *testing.T) {
 		}
 	}
 }
+func TestClosestShared(t *testing.T) {
+	test_set := []struct {
+		words []string
+		pairs string
+	}{
+		{
+			[]string{
+				"abcde",
+				"fghij",
+				"fgcij",
+				"klmno",
+			},
+			"fgij",
+		},
+		{
+			[]string{
+				"abcde",
+				"fghij",
+				"abced",
+			},
+			"abc",
+		},
+	}
+
+	for _, testrow := range test_set {
+		result := GetClosestSharedLetters(testrow.words)
+		expected := testrow.pairs
+
+		if len(result) != len(expected) {
+			t.Errorf("Parsing of sample is incorrect, got: %v, want: %v.", result, expected)
+		}
+
+		for i := range result {
+			if result[i] != expected[i] {
+				t.Errorf("Parsing of sample is incorrect, got: %v, want: %v.", result[i], expected[i])
+			}
+		}
+	}
+}

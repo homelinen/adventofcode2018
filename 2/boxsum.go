@@ -3,6 +3,7 @@ package main
 import "bufio"
 import "fmt"
 import "os"
+import "sort"
 
 type Pair struct {
 	word_a   string
@@ -111,6 +112,7 @@ func Any(vs []Pair, f func(Pair) bool) bool {
 }
 
 func CreatePairs(ids []string) []Pair {
+	// FIXME: Thisis super close
 
 	// pairs length should be n^2?
 	pairs := make([]Pair, 0)
@@ -123,7 +125,6 @@ func CreatePairs(ids []string) []Pair {
 				word_a: ids[i],
 				word_b: ids[j],
 			}
-			fmt.Println(p)
 
 			if !Any(pairs, func(s Pair) bool {
 				return s.Compare(p)
@@ -138,12 +139,20 @@ func CreatePairs(ids []string) []Pair {
 
 func GetClosestSharedLetters(ids []string) string {
 
-	distances := make([]Pair, len(ids))
+	pairs := CreatePairs(ids)
 
-	if distances[0].distance < 5 {
+	fmt.Println(pairs)
+	distances := make([]Pair, 0)
 
+	for _, p := range pairs {
+		p.distance = WordDistance(p.word_a, p.word_b)
+		distances = append(distances, p)
 	}
-	letters := ""
+
+	sort.Slice(distances, func(i, j int) bool { return distances[i].distance < distances[j].distance })
+	fmt.Println(distances[0])
+
+	letters := WordSimilarities(distances[0].word_a, distances[0].word_b)
 
 	return letters
 }
@@ -162,5 +171,5 @@ func main() {
 	}
 	fmt.Println("Count: ", Checksum(changes))
 
-	fmt.Println("Similar Closest: ", Checksum(changes))
+	fmt.Println("Similar Closest: ", GetClosestSharedLetters(changes))
 }
