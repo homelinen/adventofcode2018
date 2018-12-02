@@ -10,6 +10,28 @@ type Pair struct {
 	distance int
 }
 
+func (a Pair) Compare(b Pair) bool {
+
+	// These are terrible hashes
+	hash_a := 0
+	for _, l := range a.word_a {
+		hash_a += int(l)
+	}
+	for _, l := range a.word_b {
+		hash_a += int(l)
+	}
+
+	hash_b := 0
+	for _, l := range b.word_a {
+		hash_b += int(l)
+	}
+	for _, l := range b.word_b {
+		hash_b += int(l)
+	}
+
+	return hash_a == hash_b
+}
+
 func ExactlyTwiceOrThrice(boxid string) (bool, bool) {
 
 	var twice, thrice bool
@@ -106,19 +128,21 @@ func CreatePairs(ids []string) []Pair {
 	// pairs length should be n^2?
 	pairs := make([]Pair, 0)
 	for i, _ := range ids {
-		if i+1 == len(ids) {
-			continue
-		}
-		p := Pair{
-			word_a: ids[i],
-			word_b: ids[i+1],
-		}
-		fmt.Println(p)
+		for j, _ := range ids {
+			if ids[i] == ids[j] {
+				continue
+			}
+			p := Pair{
+				word_a: ids[i],
+				word_b: ids[j],
+			}
+			fmt.Println(p)
 
-		if !Any(pairs, func(s Pair) bool {
-			return s == p
-		}) {
-			pairs = append(pairs, p)
+			if !Any(pairs, func(s Pair) bool {
+				return s.Compare(p)
+			}) {
+				pairs = append(pairs, p)
+			}
 		}
 	}
 
