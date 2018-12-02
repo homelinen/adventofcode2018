@@ -15,7 +15,7 @@ func TestFrequency(t *testing.T) {
 	var result int64
 	result = -6
 
-	output := Frequency(sample)
+	output := Frequency(sample, 0)
 	if output != result {
 		t.Errorf("Parsing of sample is incorrect, got: %d, want: %d.", output, result)
 	}
@@ -30,7 +30,7 @@ func TestFrequency(t *testing.T) {
 
 	result = 0
 
-	output = Frequency(sample)
+	output = Frequency(sample, 0)
 	if output != result {
 		t.Errorf("Parsing of sample is incorrect, got: %d, want: %d.", output, result)
 	}
