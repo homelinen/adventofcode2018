@@ -32,8 +32,16 @@ func Process(line string) Square {
 	return square
 }
 
-func Overlap(squares []Square) int {
-	var grid [1001][1001][]int
+func BuildGrid(squares []Square) [][][]int {
+	// Setup grid
+	var grid [][][]int = make([][][]int, 1001)
+
+	for i := 0; i < 1001; i++ {
+		grid[i] = make([][]int, 1001)
+		for j := 0; j < 1001; j++ {
+			grid[i][j] = []int{}
+		}
+	}
 
 	for _, sq := range squares {
 		for i := 0; i < sq.h; i++ {
@@ -46,10 +54,10 @@ func Overlap(squares []Square) int {
 			}
 		}
 	}
-	//for _, row := range grid {
-	//fmt.Println(row)
-	//}
+	return grid
+}
 
+func Overlap(grid [][][]int) int {
 	overlaps := 0
 
 	for _, x := range grid {
@@ -61,6 +69,37 @@ func Overlap(squares []Square) int {
 	}
 
 	return overlaps
+}
+
+func Untouched(grid [][][]int, squares []Square) int {
+	untouched := make(map[int]int, 0)
+
+	for _, x := range grid {
+		for _, y := range x {
+			if len(y) > 1 {
+				for _, sq := range y {
+					untouched[sq] += 1
+				}
+			}
+		}
+	}
+
+	the_untouched := 0
+	for _, s := range squares {
+		found := false
+		for k, _ := range untouched {
+			if s.id == k {
+				found = true
+			}
+		}
+
+		if !found {
+			the_untouched = s.id
+			break
+		}
+	}
+
+	return the_untouched
 }
 
 func main() {
@@ -82,5 +121,8 @@ func main() {
 		squares = append(squares, Process(line))
 	}
 
-	fmt.Println("Count: ", Overlap(squares))
+	grid := BuildGrid(squares)
+	fmt.Println("Count: ", Overlap(grid))
+
+	fmt.Println("Untouched: ", Untouched(grid, squares))
 }

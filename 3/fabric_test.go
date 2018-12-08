@@ -41,7 +41,35 @@ func TestOverlap(t *testing.T) {
 	}
 
 	for _, testrow := range test_set {
-		result := Overlap([]Square{testrow.square1, testrow.square2})
+		grid := BuildGrid([]Square{testrow.square1, testrow.square2})
+		result := Overlap(grid)
+		expected := testrow.overlap
+
+		if result != expected {
+			t.Errorf("Parsing of sample is incorrect, got: %v, want: %v.", result, expected)
+		}
+	}
+}
+
+func TestUntouched(t *testing.T) {
+
+	test_set := []struct {
+		squares []Square
+		overlap int
+	}{
+		{
+			[]Square{
+				Square{1, 1, 3, 4, 4},
+				Square{2, 3, 1, 4, 4},
+				Square{3, 5, 5, 2, 2},
+			},
+			3,
+		},
+	}
+
+	for _, testrow := range test_set {
+		grid := BuildGrid(testrow.squares)
+		result := Untouched(grid, testrow.squares)
 		expected := testrow.overlap
 
 		if result != expected {
