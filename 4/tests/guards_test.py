@@ -1,4 +1,4 @@
-from guards import GuardSleep, parse_sorted, find_most_sleepy
+from guards import GuardSleep, parse_sorted, find_most_sleepy, find_most_sleepy_minute
 
 def test_parse_input():
 
@@ -46,3 +46,16 @@ def test_find_most_sleep():
     most_asleep = 10
 
     assert most_asleep == find_most_sleepy(guards_asleep)
+
+def test_find_sleepiest_minute():
+    guards_asleep = [
+                GuardSleep(10, "1518-11-01", 5, 20),
+                GuardSleep(99, "1518-11-02", 40, 10),
+                GuardSleep(10, "1518-11-03", 24, 5),
+                GuardSleep(99, "1518-11-04", 36, 10),
+                GuardSleep(99, "1518-11-05", 45, 10),
+                ]
+
+    most_sleepy_minute = 24
+
+    assert most_sleepy_minute == find_most_sleepy_minute(10, guards_asleep)

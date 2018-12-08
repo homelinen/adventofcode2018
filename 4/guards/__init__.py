@@ -19,3 +19,6 @@ def parse_sorted(text_input):
 
 def find_most_sleepy(guards_asleep):
     return 0
+
+def find_most_sleepy_minute(guard, guards_asleep):
+    return 0
