@@ -21,8 +21,7 @@ def test_parse_input():
         [1518-11-05 00:03] Guard #99 begins shift
         [1518-11-05 00:45] falls asleep
         [1518-11-05 00:55] wakes up
-    """.strip()
-    
+    """.strip().split("\n")
 
     guards_asleep = [
             GuardSleep(10, parse_date("1518-11-01 00:05"), 20),

@@ -39,7 +39,7 @@ def parse_sorted(text_input):
 
     guards_sleep = []
     guard_sleep = None
-    for line in text_input.split("\n"):
+    for line in text_input:
         match = re.search(r'\[(\d+-\d+-\d+ \d+:\d+)] (.*)$', line)
         date = match[1]
         action = match[2]
@@ -87,3 +87,18 @@ def find_most_sleepy_minute(guard, guards_asleep):
                 minutes[minute] = 1
 
     return max(minutes, key=lambda d: minutes[d])
+
+
+def main():
+    lines = ""
+    with open("input.txt") as infile:
+        lines = infile.readlines()
+
+    guards = parse_sorted(lines)
+    guard = find_most_sleepy(guards)
+    sleepiest = find_most_sleepy_minute(guard, guards)
+    print(sleepiest * guard)
+
+
+if __name__ == "__main__":
+    main()
