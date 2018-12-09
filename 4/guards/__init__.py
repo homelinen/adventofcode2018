@@ -73,4 +73,17 @@ def find_most_sleepy(guards_asleep):
     return max(sleeper, key=lambda d: sleeper[d])
 
 def find_most_sleepy_minute(guard, guards_asleep):
-    return 0
+    guards_times = filter( lambda x: x.guard == guard, guards_asleep)
+
+    minutes = {}
+
+    for gt in guards_times:
+        max_min = gt.date.minute + gt.duration 
+
+        for minute in range(gt.date.minute, max_min):
+            if minute in minutes:
+                minutes[minute] += 1
+            else:
+                minutes[minute] = 1
+
+    return max(minutes, key=lambda d: minutes[d])
