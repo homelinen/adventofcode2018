@@ -9,7 +9,7 @@ class GuardSleep():
     slept = False
 
     def __init__(self, guard, date=datetime.today(), duration=0):
-        self.guard = guard
+        self.guard = int(guard)
         self.duration = duration
         self.date = date
 
@@ -63,7 +63,14 @@ def parse_sorted(text_input):
     return guards_sleep
 
 def find_most_sleepy(guards_asleep):
-    return 0
+
+    sleeper = {}
+    for asleep in guards_asleep:
+        if asleep.guard in sleeper:
+            sleeper[asleep.guard] += asleep.duration
+        else:
+            sleeper[asleep.guard] = asleep.duration
+    return max(sleeper, key=lambda d: sleeper[d])
 
 def find_most_sleepy_minute(guard, guards_asleep):
     return 0
