@@ -27,11 +27,11 @@ func GameOfMarbles(players int, final_marble int) int {
 	for i := 1; i <= final_marble; i++ {
 
 		if i%23 == 0 {
-			board = board.Move(board.Len() - 7)
+			board = board.Move(-7)
+
 			removed := board.Next().Value
 			board.Unlink(1)
-			player_score[cur_player%players] += i
-			player_score[cur_player%players] += removed.(int)
+			player_score[cur_player%players] += i + removed.(int)
 
 			cur_player += 1
 			continue
@@ -49,8 +49,6 @@ func GameOfMarbles(players int, final_marble int) int {
 	//board.Do(func(p interface{}) {
 	//fmt.Println(p.(int))
 	//})
-
-	player_score[0] = 1
 
 	_, score := MaxSlice(player_score)
 

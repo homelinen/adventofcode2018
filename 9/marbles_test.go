@@ -15,7 +15,7 @@ func TestGameOfMarbles(t *testing.T) {
 		{21, 6111, 54718},
 		{30, 5807, 37305},
 		{493, 71863, 367802},
-		//{493, 7186300, 367802},
+		{493, 7186300, 367802},
 	}
 	for _, testrow := range test_set {
 		result := GameOfMarbles(testrow.players, testrow.last_marble)
